@@ -1,76 +1,140 @@
-# Windows-it
+# Apple A18 Pro Driver Suite for Windows
+## MacBook Neo (Mac17,5) Complete SoC Driver Package
 
-> Bringing Windows closer to Apple Silicon through research, documentation, compatibility development, and platform exploration.
+**Version:** 1.0.0  
+**Date:** June 21, 2026  
+**Status:** Proof of Concept / Educational Reference Implementation  
 
-> ⚠️ IMPORTANT
->
-> The current macOS application is a placeholder and is not functional. It exists only as an early development build while the project's architecture, research, and future features are being developed.
+---
 
-## Overview
+## Executive Summary
 
-Windows-it is an experimental project dedicated to investigating the possibility of improving Windows support on Apple Silicon devices.
+This repository contains a complete theoretical driver suite for running Windows on the Apple A18 Pro SoC (System on Chip) found in the MacBook Neo (Mac17,5). The project is divided into six core kernel-mode components:
 
-The project focuses on understanding Apple Silicon hardware, documenting system behavior, researching hardware interfaces, and developing software components that may help bridge the gap between Windows and Apple-designed ARM systems.
+| # | Driver | Class | Description |
+|---|--------|-------|-------------|
+| 1 | **Graphics (WDDM)** | Display | GPU control, rendering, thermal throttling, resolution enumeration |
+| 2 | **Chipset (KMDF)** | System | Power Manager (PMGR), Interrupt Controller (AIC), GPIO |
+| 3 | **Storage (KMDF)** | SCSIAdapter | NVM Storage (ANS) controller, DMA block transfers |
+| 4 | **Audio (KMDF)** | MEDIA | Multichannel Audio (MCA), DMA ring buffers, DAC volume |
+| 5 | **USB (KMDF)** | USB | DWC3 xHCI host controller, USB-C PHY initialization |
+| 6 | **Input (KMDF)** | HIDClass | SPI keyboard/trackpad, HID report generation |
 
-This repository serves as the central hub for project documentation, source code, testing results, hardware research, development tools, and community collaboration.
+> [!IMPORTANT]
+> **Educational Reference Disclaimer:** This code serves as an architectural blueprint demonstrating modern driver design. Running this on actual Apple Silicon Macs requires proprietary firmware, secure boot bypasses, and custom virtualization layers that are not part of this repository.
 
-## Why This Project Exists
+---
 
-Apple Silicon has demonstrated impressive performance, power efficiency, and hardware integration. However, Windows support on these devices remains limited compared to traditional PC hardware.
+## Directory Structure
 
-Windows-it aims to explore what is required to improve compatibility by studying:
+```
+Apple_A18Pro_Driver/
+├── README.md                           # This unified suite guide
+├── DEVELOPMENT.md                      # Build, install, and debug manual
+├── ARCHITECTURE.md                     # Technical architecture details
+├── HARDWARE_INTERFACE.md               # Hardware registers reference map
+│
+├── graphics/                           # Graphics Driver (WDDM Display)
+│   ├── inc/                            # Headers
+│   ├── src/                            # Source
+│   ├── inf/                            # INF
+│   ├── installer/                      # Scripts & Inno Setup
+│   └── AppleA18ProDriver.vcxproj
+│
+├── chipset/                            # Chipset Driver (PMGR / AIC / GPIO)
+│   ├── inc/                            # Headers
+│   ├── src/                            # Source
+│   ├── inf/                            # INF
+│   ├── installer/                      # Scripts
+│   └── AppleA18ProChipset.vcxproj
+│
+├── storage/                            # Storage Driver (ANS NVMe)
+│   ├── inc/                            # Headers
+│   ├── src/                            # Source
+│   ├── inf/                            # INF
+│   ├── installer/                      # Scripts
+│   └── AppleA18ProStorage.vcxproj
+│
+├── audio/                              # Audio Driver (MCA)
+│   ├── inc/                            # Headers
+│   ├── src/                            # Source
+│   ├── inf/                            # INF
+│   ├── installer/                      # Scripts
+│   └── AppleA18ProAudio.vcxproj
+│
+├── usb/                                # USB Driver (DWC3 xHCI)
+│   ├── inc/                            # Headers
+│   ├── src/                            # Source
+│   ├── inf/                            # INF
+│   ├── installer/                      # Scripts
+│   └── AppleA18ProUsb.vcxproj
+│
+└── input/                              # Input Driver (SPI HID)
+    ├── inc/                            # Headers
+    ├── src/                            # Source
+    ├── inf/                            # INF
+    ├── installer/                      # Scripts
+    └── AppleA18ProInput.vcxproj
+```
 
-- Hardware initialization
-- Device communication
-- Driver requirements
-- Boot processes
-- Platform firmware behavior
-- ARM64 Windows compatibility
-- Hardware abstraction methods
+---
 
-The long-term objective is to document and develop the software infrastructure necessary for improved Windows operation on Apple Silicon systems.
+## Driver Specifications
 
-## Project Goals
+### 1. Graphics Driver (WDDM)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B5`
+- **Binary**: `AppleA18ProDisplay.dll`
+- **Features**: GPU state reset, 10 resolution presets, D0-D3 power management, VSync interrupts, temperature monitoring
 
-### Research
+### 2. Chipset Driver (KMDF)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B0`
+- **Binary**: `AppleA18ProChipset.sys`
+- **Features**: Clock gating, voltage scaling, AIC interrupt routing, 32-pin GPIO control
 
-- Analyze Apple Silicon hardware behavior
-- Document device interfaces
-- Study system firmware and boot processes
-- Investigate platform initialization sequences
+### 3. Storage Driver (KMDF)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B1`
+- **Binary**: `AppleA18ProStorage.sys`
+- **Features**: ANS controller reset/enable, NVMe command queue submission, DMA read/write transfers
 
-### Development
+### 4. Audio Driver (KMDF)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B2`
+- **Binary**: `AppleA18ProAudio.sys`
+- **Features**: MCA serial interface, TX/RX DMA ring buffers, stereo DAC volume control, playback start/stop
 
-- Build compatibility components
-- Create testing utilities
-- Develop supporting software tools
-- Improve hardware interaction capabilities
+### 5. USB Driver (KMDF)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B3`
+- **Binary**: `AppleA18ProUsb.sys`
+- **Features**: DWC3 core initialization, USB PHY reset/power-on, xHCI run/halt control
 
-### Documentation
+### 6. Input Driver (KMDF)
+- **PCI HW ID**: `PCI\VEN_106B&DEV_16B4`
+- **Binary**: `AppleA18ProInput.sys`
+- **Features**: SPI master mode, FIFO-based packet reading, keyboard HID reports (6KRO), trackpad relative motion reports
 
-- Maintain detailed technical documentation
-- Record discoveries and test results
-- Provide references for future development
+---
 
-### Community
+## Hardware Memory Map
 
-- Share findings with developers and researchers
-- Encourage collaboration and discussion
-- Create a knowledge base for future projects
+| Controller | PCI Device ID | MMIO Base | Size | Description |
+|------------|---------------|-----------|------|-------------|
+| **PMGR** | `16B0` | `0x30E000000` | 64KB | Power Management |
+| **AIC** | `16B0` | `0x30B00000` | 64KB | Interrupt Controller |
+| **GPIO** | `16B0` | `0x30C00000` | 64KB | General Purpose I/O |
+| **GPU** | `16B5` | `0x30D000000` | 256KB | Graphics Registers |
+| **ANS** | `16B1` | `0x38F000000` | 64KB | NVM Storage |
+| **MCA** | `16B2` | `0x38E00000` | 64KB | Multichannel Audio |
+| **DWC3** | `16B3` | `0x38C00000` | 64KB | USB Controller |
+| **SPI** | `16B4` | `0x38A00000` | 64KB | Keyboard/Trackpad |
 
-## Current Status
+---
 
-🚧 Early Development
+## Getting Started
 
-Windows-it is currently in the research and planning phase.
+To compile and test the drivers, please refer to **[DEVELOPMENT.md](file:///Users/visionvt/Documents/graphics%20driver/Apple_A18Pro_Driver/DEVELOPMENT.md)**.
 
-Many components are experimental, incomplete, or under active investigation.
-
-## Repository Structure
-
-```text
-/docs        Documentation and research notes
-/src         Source code
-/tools       Development and testing utilities
-/tests       Test results and validation
-/assets      Images, diagrams, and resources
+Each driver includes automated command-line installers that handle:
+- Test-signing mode activation
+- Self-signed certificate generation and trust enrollment
+- Security catalog compilation (via WDK `Inf2Cat`)
+- Binary signing
+- Driver store registration (via `pnputil`)
