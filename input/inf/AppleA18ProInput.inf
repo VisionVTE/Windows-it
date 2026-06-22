@@ -1,0 +1,50 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=HIDClass
+ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18ProInput.cat
+
+[Manufacturer]
+%Apple%=AppleInput,NTx86,NTamd64,NTarm64
+
+[AppleInput.NTx86]
+%AppleA18ProInput%=AppleA18ProInput_Device,PCI\VEN_106B&DEV_16B4
+
+[AppleInput.NTamd64]
+%AppleA18ProInput%=AppleA18ProInput_Device,PCI\VEN_106B&DEV_16B4
+
+[AppleInput.NTarm64]
+%AppleA18ProInput%=AppleA18ProInput_Device,PCI\VEN_106B&DEV_16B4
+
+[AppleA18ProInput_Device]
+CopyFiles=AppleA18ProInput_Files
+
+[AppleA18ProInput_Files]
+AppleA18ProInput.sys
+
+[AppleA18ProInput_Device.Services]
+AddService=AppleA18ProInput,2,AppleA18ProInput_Service
+
+[AppleA18ProInput_Service]
+DisplayName=%ServiceDisplayName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\AppleA18ProInput.sys
+
+[SourceDisksFiles]
+AppleA18ProInput.sys=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProInput_Files=12
+
+[Strings]
+Apple="Apple Inc."
+AppleA18ProInput="Apple A18 Pro SPI HID Input Controller (Keyboard/Trackpad)"
+ServiceDisplayName="Apple A18 Pro Input Service"
+DiskName="Apple A18 Pro Input Installation Disk"

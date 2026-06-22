@@ -1,0 +1,63 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18ProChipset.cat
+
+[Manufacturer]
+%Apple%=AppleChipset,NTx86,NTamd64,NTarm64
+
+[AppleChipset.NTx86]
+%AppleA18ProChipset%=AppleA18ProChipset_Device,PCI\VEN_106B&DEV_16B0
+
+[AppleChipset.NTamd64]
+%AppleA18ProChipset%=AppleA18ProChipset_Device,PCI\VEN_106B&DEV_16B0
+
+[AppleChipset.NTarm64]
+%AppleA18ProChipset%=AppleA18ProChipset_Device,PCI\VEN_106B&DEV_16B0
+
+; ================= Device Installation =================
+
+[AppleA18ProChipset_Device]
+CopyFiles=AppleA18ProChipset_Files
+AddReg=AppleA18ProChipset_Reg
+
+[AppleA18ProChipset_Files]
+AppleA18ProChipset.sys
+
+[AppleA18ProChipset_Reg]
+HKR,,PmgrControlValue,0x00010001,1
+HKR,,DebugLevel,0x00010001,0
+
+; ================= Service Installation =================
+
+[AppleA18ProChipset_Device.Services]
+AddService=AppleA18ProChipset,2,AppleA18ProChipset_Service
+
+[AppleA18ProChipset_Service]
+DisplayName=%ServiceDisplayName%
+ServiceType=1 ; SERVICE_KERNEL_DRIVER
+StartType=3   ; SERVICE_DEMAND_START
+ErrorControl=1 ; SERVICE_ERROR_NORMAL
+ServiceBinary=%12%\AppleA18ProChipset.sys
+
+; ================= Source and Destinations =================
+
+[SourceDisksFiles]
+AppleA18ProChipset.sys=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProChipset_Files=12 ; System32\drivers
+
+; ================= Strings =================
+
+[Strings]
+Apple="Apple Inc."
+AppleA18ProChipset="Apple A18 Pro SoC System Controller"
+ServiceDisplayName="Apple A18 Pro Chipset Service"
+DiskName="Apple A18 Pro Chipset Driver Installation Disk"

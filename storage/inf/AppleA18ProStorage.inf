@@ -1,0 +1,50 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=SCSIAdapter
+ClassGuid={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18ProStorage.cat
+
+[Manufacturer]
+%Apple%=AppleStorage,NTx86,NTamd64,NTarm64
+
+[AppleStorage.NTx86]
+%AppleA18ProStorage%=AppleA18ProStorage_Device,PCI\VEN_106B&DEV_16B1
+
+[AppleStorage.NTamd64]
+%AppleA18ProStorage%=AppleA18ProStorage_Device,PCI\VEN_106B&DEV_16B1
+
+[AppleStorage.NTarm64]
+%AppleA18ProStorage%=AppleA18ProStorage_Device,PCI\VEN_106B&DEV_16B1
+
+[AppleA18ProStorage_Device]
+CopyFiles=AppleA18ProStorage_Files
+
+[AppleA18ProStorage_Files]
+AppleA18ProStorage.sys
+
+[AppleA18ProStorage_Device.Services]
+AddService=AppleA18ProStorage,2,AppleA18ProStorage_Service
+
+[AppleA18ProStorage_Service]
+DisplayName=%ServiceDisplayName%
+ServiceType=1
+StartType=0 ; SERVICE_BOOT_START (Storage drivers load early)
+ErrorControl=1
+ServiceBinary=%12%\AppleA18ProStorage.sys
+
+[SourceDisksFiles]
+AppleA18ProStorage.sys=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProStorage_Files=12
+
+[Strings]
+Apple="Apple Inc."
+AppleA18ProStorage="Apple A18 Pro NVM Storage (ANS) Controller"
+ServiceDisplayName="Apple A18 Pro Storage Service"
+DiskName="Apple A18 Pro Storage Installation Disk"

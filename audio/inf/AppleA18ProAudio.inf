@@ -1,0 +1,50 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=MEDIA
+ClassGuid={4D36E96C-E325-11CE-BFC1-08002BE10318}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18ProAudio.cat
+
+[Manufacturer]
+%Apple%=AppleAudio,NTx86,NTamd64,NTarm64
+
+[AppleAudio.NTx86]
+%AppleA18ProAudio%=AppleA18ProAudio_Device,PCI\VEN_106B&DEV_16B2
+
+[AppleAudio.NTamd64]
+%AppleA18ProAudio%=AppleA18ProAudio_Device,PCI\VEN_106B&DEV_16B2
+
+[AppleAudio.NTarm64]
+%AppleA18ProAudio%=AppleA18ProAudio_Device,PCI\VEN_106B&DEV_16B2
+
+[AppleA18ProAudio_Device]
+CopyFiles=AppleA18ProAudio_Files
+
+[AppleA18ProAudio_Files]
+AppleA18ProAudio.sys
+
+[AppleA18ProAudio_Device.Services]
+AddService=AppleA18ProAudio,2,AppleA18ProAudio_Service
+
+[AppleA18ProAudio_Service]
+DisplayName=%ServiceDisplayName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\AppleA18ProAudio.sys
+
+[SourceDisksFiles]
+AppleA18ProAudio.sys=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProAudio_Files=12
+
+[Strings]
+Apple="Apple Inc."
+AppleA18ProAudio="Apple A18 Pro Multichannel Audio (MCA) Controller"
+ServiceDisplayName="Apple A18 Pro Audio Service"
+DiskName="Apple A18 Pro Audio Installation Disk"

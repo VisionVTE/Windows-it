@@ -1,0 +1,50 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGuid={36FC9E60-C465-11CF-8056-444553540000}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18ProUsb.cat
+
+[Manufacturer]
+%Apple%=AppleUsb,NTx86,NTamd64,NTarm64
+
+[AppleUsb.NTx86]
+%AppleA18ProUsb%=AppleA18ProUsb_Device,PCI\VEN_106B&DEV_16B3
+
+[AppleUsb.NTamd64]
+%AppleA18ProUsb%=AppleA18ProUsb_Device,PCI\VEN_106B&DEV_16B3
+
+[AppleUsb.NTarm64]
+%AppleA18ProUsb%=AppleA18ProUsb_Device,PCI\VEN_106B&DEV_16B3
+
+[AppleA18ProUsb_Device]
+CopyFiles=AppleA18ProUsb_Files
+
+[AppleA18ProUsb_Files]
+AppleA18ProUsb.sys
+
+[AppleA18ProUsb_Device.Services]
+AddService=AppleA18ProUsb,2,AppleA18ProUsb_Service
+
+[AppleA18ProUsb_Service]
+DisplayName=%ServiceDisplayName%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\AppleA18ProUsb.sys
+
+[SourceDisksFiles]
+AppleA18ProUsb.sys=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProUsb_Files=12
+
+[Strings]
+Apple="Apple Inc."
+AppleA18ProUsb="Apple A18 Pro USB (DWC3) Controller"
+ServiceDisplayName="Apple A18 Pro USB Host Controller Service"
+DiskName="Apple A18 Pro USB Installation Disk"

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A18PROCS-D000-4000-8000-000000000000}</ProjectGuid>
+    <RootNamespace>AppleA18ProChipset</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+
+  <Import Project="$(VCProjectsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup>
+    <ConfigurationType>Driver</ConfigurationType>
+    <DriverType>KMDF</DriverType>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <SpectreMitigation>Spectre</SpectreMitigation>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>AppleA18ProChipset</TargetName>
+    <TargetExt>.sys</TargetExt>
+    <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>AppleA18ProChipset</TargetName>
+    <TargetExt>.sys</TargetExt>
+    <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <TargetName>AppleA18ProChipset</TargetName>
+    <TargetExt>.sys</TargetExt>
+    <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <TargetName>AppleA18ProChipset</TargetName>
+    <TargetExt>.sys</TargetExt>
+    <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+  </PropertyGroup>
+
+  <Import Project="$(VCProjectsPath)\Microsoft.Cpp.props" />
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4201;4214;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;KMDF_VERSION_MAJOR=1;KMDF_VERSION_MINOR=15;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>$(KMDF_LIB_PATH)\WdfLdr.lib;$(KMDF_LIB_PATH)\WdfDriverEntry.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <ClInclude Include="inc\apple_a18pro_chipset.h" />
+    <ClInclude Include="inc\apple_a18pro_chipset_hw.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="src\apple_a18pro_chipset.c" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Inf Include="inf\AppleA18ProChipset.inf" />
+  </ItemGroup>
+
+  <Import Project="$(VCProjectsPath)\Microsoft.Cpp.targets" />
+</Project>

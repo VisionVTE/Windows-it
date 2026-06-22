@@ -1,0 +1,46 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=Display
+ClassGuid={4D36E968-E325-11CE-BFC1-08002BE10318}
+Provider=%Apple%
+DriverVer=06/21/2026,1.0.0.0
+CatalogFile=AppleA18Pro.cat
+
+[Manufacturer]
+%Apple%=AppleDisplayDriver,NTx86,NTamd64,NTarm64
+
+[AppleDisplayDriver.NTx86]
+%AppleA18Pro%=AppleA18ProDriver,PCI\VEN_106B&DEV_16B5
+
+[AppleDisplayDriver.NTamd64]
+%AppleA18Pro%=AppleA18ProDriver,PCI\VEN_106B&DEV_16B5
+
+[AppleDisplayDriver.NTarm64]
+%AppleA18Pro%=AppleA18ProDriver,PCI\VEN_106B&DEV_16B5
+
+[AppleA18ProDriver]
+FeatureScore=E6
+AddReg=AppleA18ProAddReg
+CopyFiles=AppleA18ProCopyFiles
+CopyInf=AppleA18Pro.inf
+
+[AppleA18ProAddReg]
+HKR,,InstalledDisplayDrivers
+HKR,,QxdmDebugLevel,0x00010001,0
+
+[AppleA18ProCopyFiles]
+AppleA18ProDisplay.dll
+
+[SourceDisksFiles]
+AppleA18ProDisplay.dll=1
+
+[SourceDisksNames]
+1=%DiskName%,,,
+
+[DestinationDirs]
+AppleA18ProCopyFiles=10,System32
+
+[Strings]
+Apple="Apple Inc."
+AppleA18Pro="Apple A18 Pro Graphics"
+DiskName="Apple A18 Pro Graphics Driver Disk 1"
