@@ -2,6 +2,10 @@
 
 > Bringing Windows closer to Apple Silicon through research, documentation, compatibility development, and platform exploration.
 
+> ⚠️ IMPORTANT
+>
+> The current macOS application is a placeholder and is not functional. It exists only as an early development build while the project's architecture, research, and future features are being developed.
+
 ## Overview
 
 Windows-it is an experimental project dedicated to investigating the possibility of improving Windows support on Apple Silicon devices.
